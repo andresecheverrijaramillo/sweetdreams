@@ -94,3 +94,43 @@ class ProductCreatedView(View):
         viewData = {}
         viewData["title"] = "Product Created"
         return render(request, self.template_name, viewData)
+
+class CartView(View):
+    template_name = 'cart/index.html'
+    
+    def get(self, request):
+        products = Product.objects.all()
+        cart_products = {}
+        cart_product_data = request.session.get('cart_product_data', {})
+        for product in products:
+            if str(product.id) in cart_product_data.keys():
+                cart_products[product.id] = product
+        # Prepare data for the view
+        cart_total = 0
+        for product in cart_products.values():
+            cart_total += product.price
+        view_data = {
+            'title': 'Cart - Online Store',
+            'subtitle': 'Shopping Cart',
+            'products': products,
+            'cart_products': cart_products,
+            'cart_total': cart_total
+        }
+
+        return render(request, self.template_name, view_data)
+    
+    def post(self, request, product_id):
+        # Get cart products from session and add the new product
+        cart_product_data = request.session.get('cart_product_data', {})
+        cart_product_data[product_id] = product_id
+        request.session['cart_product_data'] = cart_product_data
+
+        return redirect('cart')
+
+
+class CartRemoveAllView(View):
+    def post(self, request):
+        # Remove all products from cart in session
+        if 'cart_product_data' in request.session:
+            del request.session['cart_product_data']
+        return redirect('cart')
