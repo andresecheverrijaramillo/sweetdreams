@@ -3,23 +3,23 @@
 {% block header_title %} {{subtitle}} {% endblock %}
 {% block content %}
 <div class="card mb-3">
- <div class="row g-0">
- <div class="col-md-4">
-    <img src="{{ product.image.url }}" class="card-img-top img-card" style="max-width: 300px; height: 400px;">
- </div>
- <div class="col-md-8">
- <div class="card-body">
- <h5 class="card-title">
- {{product.name}}
- </h5>
- <p class="card-text">${{product.price}}</p> 
- <form method="POST" action="{% url 'show' product.id %}">
- {% csrf_token %}
- <input type="hidden" name="product_id" value="{{product.id}}">
- <button type="submit">Eliminar</button>
- </form>
- </div>
- </div>
- </div>
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{ product.image.url }}" class="card-img-top img-card" style="max-width: 300px; height: 400px;">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{product.name}}
+                </h5>
+                <p class="card-text">${{product.price}}</p>
+                <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <button type="submit">Agregar al carrito</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
