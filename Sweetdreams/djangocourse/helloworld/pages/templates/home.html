@@ -2,6 +2,23 @@
 {% block title %}'Home Page - Online Store'{% endblock %}
 {% block content %}
 <div class="text-center">
-    Welcome to the application
+    <b> Welcome to SweetDreams! </b>
+</div>
+<div class="container mt-4">
+    <h2>Featured Products</h2>
+    <div class="row">
+        {% for product in random_products %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="max-width: 500px; height: 350px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">${{ product.price }}</p>
+                    <a href="{% url 'show' id=product.id %}" class="btn bg-primary text-white">See product</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

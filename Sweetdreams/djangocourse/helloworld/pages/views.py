@@ -7,16 +7,30 @@ from django import forms
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ValidationError 
 from .models import Product, Category, Organization
+from random import sample
 
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Obtén tres productos aleatorios de la base de datos
+        random_products = sample(list(Product.objects.all()), 3)
+        context['title'] = 'Home Page - SweetDreams'
+        context['random_products'] = random_products  # Pasa los productos aleatorios al contexto
+        return context
     
 class ProductFilterForm(forms.Form):
     # Agrega los campos que desees para filtrar, por ejemplo, una categoría
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
-        empty_label="Todas las categorías",
+        empty_label="Todas las Categorías",
+        required=False
+    )
+    organization = forms.ModelChoiceField(
+        queryset=Organization.objects.all(),
+        empty_label="Todas las Compañías",
         required=False
     )
 
@@ -32,14 +46,16 @@ class ProductIndexView(View):
         filter_form = ProductFilterForm(request.GET)
         if filter_form.is_valid():
             category = filter_form.cleaned_data.get('category')
+            organization = filter_form.cleaned_data.get('organization')
             # Filtra los productos en función de los parámetros del formulario
             products = Product.objects.all()
             if category:
                 products = products.filter(category=category)
-
-        # Agrega los productos filtrados al contexto
+            if organization:
+                products = products.filter(organization=organization)
+        # Agrega los productos filtrados y el formulario al contexto
         viewData["products"] = products
-        viewData["filter_form"] = filter_form  # Pasa el formulario al contexto
+        viewData["filter_form"] = filter_form
         
         return render(request, self.template_name, viewData)
 

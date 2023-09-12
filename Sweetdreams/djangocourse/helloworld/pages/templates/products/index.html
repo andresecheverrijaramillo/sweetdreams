@@ -3,21 +3,27 @@
 {% block header_title %} {{ subtitle }} {% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-md-12">
-        <form method="get" action="{% url 'index' %}" class="mb-4">
-            {{ filter_form.as_p }}
-            <button type="submit">Filtrar</button>
-        </form>
-    </div>
-    {% for product in products %}
-    <div class="col-md-4 col-lg-3 mb-2">
-        <div class="card">
-            <img src="{{ product.image.url }}" class="card-img-top img-card" style="max-width: 300px; height: 400px;">
-            <div class="card-body text-center">
-                <a href="{% url 'show' id=product.id %}" class="btn bg-primary text-white">{{ product.name }}</a>
-            </div>
+    <div class="col-md-2 ml-auto">
+        <div class="sidebar">
+            <form method="get" action="{% url 'index' %}">
+                {{ filter_form.as_p }}
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
         </div>
     </div>
-    {% endfor %}
+    <div class="col-md-9">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-4 col-lg-3 mb-2">
+                <div class="card">
+                    <img src="{{ product.image.url }}" class="card-img-top img-card" style="max-width: 300px; height: 300px;">
+                    <div class="card-body text-center">
+                        <a href="{% url 'show' id=product.id %}" class="btn bg-primary text-white">{{ product.name }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 {% endblock %}
