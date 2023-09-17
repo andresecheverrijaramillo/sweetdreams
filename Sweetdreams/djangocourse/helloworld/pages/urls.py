@@ -9,6 +9,7 @@ from .views import (
     signup,
     signout,
     signin,
+    ProductSearch,
 )
 
 urlpatterns = [
@@ -21,4 +22,6 @@ urlpatterns = [
     path("signup/", signup, name="signup"),
     path("signout/", signout, name="signout"),
     path("signin/", signin, name="signin"),
+    path('search_products/', ProductSearch.as_view(), name='search_products'),
+
 ]

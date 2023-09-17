@@ -15,6 +15,7 @@
                 <p class="card-text">${{product.price}}</p>
                 <form method="POST" action="{% url 'add_to_cart' product.id %}">
                     {% csrf_token %}
+                    <input type="number" class="form-control mb-2" placeholder="Quantity" name="quantity" value="{{form.data.price }}" min="1" style="width: 100px;">
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                     <button type="submit">Agregar al carrito</button>
                 </form>

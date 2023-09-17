@@ -10,7 +10,7 @@ from .models import Product, Category, Organization
 from random import sample
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth import login, logout, authenticate
 
 
 # Create your views here.
@@ -131,10 +131,7 @@ class AddToCartView(View):
     def post(self, request, product_id):
         product_id = request.POST.get("product_id")
         cart_product_data = request.session.get("cart_product_data", {})
-
-        # Incrementar la cantidad del producto en el carrito
-        cart_product_data[product_id] = int(cart_product_data.get(product_id, 0)) + 1
-
+        cart_product_data[product_id] = int(cart_product_data.get(product_id, 0)) + int(request.POST.get('quantity'))
         request.session["cart_product_data"] = cart_product_data
         return redirect("index")
 
@@ -166,20 +163,43 @@ def signup(request):
             except Exception as e:
                 return HttpResponseRedirect(f"{reverse('signup')}?user=1")
         return HttpResponseRedirect(f"{reverse('signup')}?password=1")
+
+
 def signout(request):
     logout(request)
     return redirect("home")
+
 
 def signin(request):
     if request.method == "GET":
         form = AuthenticationForm()
         view_data = {"form": form}
-        return render (request,"sign/signin.html",view_data)
+        return render(request, "sign/signin.html", view_data)
     else:
-        user=authenticate(request, username=request.POST["username"],password=request.POST["password"])
+        user = authenticate(
+            request,
+            username=request.POST["username"],
+            password=request.POST["password"],
+        )
         if user is None:
             return HttpResponseRedirect(f"{reverse('signin')}?error=1")
         else:
             login(request, user)
             return HttpResponseRedirect(f"{reverse('signin')}?success=1")
-        
+
+class ProductSearch(ListView):
+    model = Product
+    template_name = "products/index.html"
+    context_object_name = 'products'  # El nombre que se usará en la plantilla para los objetos
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        filter_form = ProductFilterForm(self.request.GET)
+        context["title"] = "Products - Online Store"
+        context["subtitle"] = "List of products"
+        context['filter_form'] = filter_form
+        return context
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Product.objects.filter(name__icontains=query).order_by('name')
