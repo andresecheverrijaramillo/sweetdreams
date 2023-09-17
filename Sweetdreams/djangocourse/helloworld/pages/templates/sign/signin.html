@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}'Home Page - Online Store'{% endblock %}
+{% block content %}
+<form action="/signin/" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>
+        sign in
+    </button>
+</form>
+<script>
+    // Verifica si la URL contiene un parámetro "success" para mostrar la alerta
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("success")) {
+      alert("Successful log in!");
+      // Redirige a otra página después de mostrar la alerta
+      window.location.href = "/";
+    }
+    if (urlParams.get("error")) {
+      alert("Password or User do not match");
+      // Redirige a otra página después de mostrar la alerta
+      window.location.href = "/signin"; // Cambia "/login" por la URL a la que deseas redirigir
+    }
+  </script>
+{% endblock %}

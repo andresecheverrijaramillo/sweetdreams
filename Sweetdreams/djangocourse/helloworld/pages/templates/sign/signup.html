@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}'Home Page - Online Store'{% endblock %}
+{% block content %}
+<form action="/signup/" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>
+        sign up
+    </button>
+</form>
+
+<script>
+    // Verifica si la URL contiene un parámetro "success" para mostrar la alerta
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("success")) {
+      alert("Successful registration! Now you can log in.");
+      window.location.href = "/";
+    }
+    if (urlParams.get("password")) {
+      alert("Password do not match");
+    }
+    if (urlParams.get("user")) {
+      alert("User name already exist");
+    }
+  </script>
+
+{% endblock %}
