@@ -11,8 +11,8 @@ from random import sample
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-
-
+import json
+from django.conf import settings
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = "home.html"
@@ -203,3 +203,15 @@ class ProductSearch(ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         return Product.objects.filter(name__icontains=query).order_by('name')
+
+def export_products_to_json(request):
+    products = Product.objects.all()
+    products_data = [{'name': product.name, 
+                    'price': product.price,
+                    'created_at': str(product.created_at),
+                    'updated_at': str(product.updated_at),
+                    'image_url': "http://35.223.74.49:8000"+settings.MEDIA_URL + str(product.image)} for product in products]
+    json_data = json.dumps(products_data, indent=2)
+    response = HttpResponse(json_data, content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="products.json"'
+    return response

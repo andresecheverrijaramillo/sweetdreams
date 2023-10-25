@@ -41,6 +41,7 @@
           <a class="nav-link active" href="{% url 'home' %}">Home</a>
           <a class="nav-link active" href="{% url 'index' %}">Products</a>
           <a class="nav-link active" href="{% url 'cart' %}">Cart</a>
+          <a class="nav-link active" href="{% url 'export_products_json' %}">JSON</a>
           {% if user.is_authenticated %}
           <a class="nav-link active" href="{% url 'signout' %}">Log out</a>
           <span class="nav-link active" style="color: #5d12ac;"><strong>{{ user.username }}</strong></span>

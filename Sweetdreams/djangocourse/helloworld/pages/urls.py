@@ -10,6 +10,7 @@ from .views import (
     signout,
     signin,
     ProductSearch,
+    export_products_to_json,
 )
 
 urlpatterns = [
@@ -23,5 +24,5 @@ urlpatterns = [
     path("signout/", signout, name="signout"),
     path("signin/", signin, name="signin"),
     path('search_products/', ProductSearch.as_view(), name='search_products'),
-
+    path('export-products-json/', export_products_to_json, name='export_products_json'),
 ]
