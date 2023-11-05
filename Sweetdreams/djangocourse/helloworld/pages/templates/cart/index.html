@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %} {{ title }} {% endblock %}
 {% block header_title %} {{ subtitle }} {% endblock %}
 
@@ -14,20 +15,20 @@
       justify-content: center;
       align-items: center;
     ">
-      <h1>Products in cart</h1>
+      <h1>{% trans "Products in cart" %}</h1>
       <ul>
         {% for product in cart_products %}
           <li>
-            Name: {{ product.name }} -
-            Price: ${{ product.price }}
-            Quantity: {{ product.quantity }}
+            {% trans "Name" %}: {{ product.name }} -
+            {% trans "Price" %}: ${{ product.price }}
+            {% trans "Quantity" %}: {{ product.quantity }}
           </li>
         {% endfor %}
-        <p>Total Cart Price: ${{ cart_total }}</p>
+        <p>{% trans "Total Cart Price" %}: ${{ cart_total }}</p>
       </ul>
       <form method="post" action="{% url 'cart_removeAll' %}">
         {% csrf_token %}
-        <button type="submit">Remove all products from cart</button>
+        <button type="submit">{% trans "Remove all products from cart" %}</button>
       </form>
     </div>
   </div>

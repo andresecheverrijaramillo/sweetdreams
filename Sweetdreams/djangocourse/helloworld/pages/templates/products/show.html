@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %} {{title}} {% endblock %}
 {% block header_title %} {{subtitle}} {% endblock %}
 {% block content %}
@@ -17,7 +18,7 @@
                     {% csrf_token %}
                     <input type="number" class="form-control mb-2" placeholder="Quantity" name="quantity" value="{{form.data.price }}" min="1" style="width: 100px;">
                     <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <button type="submit">Agregar al carrito</button>
+                    <button type="submit">{% trans "Add to Cart" %}</button>
                 </form>
             </div>
         </div>

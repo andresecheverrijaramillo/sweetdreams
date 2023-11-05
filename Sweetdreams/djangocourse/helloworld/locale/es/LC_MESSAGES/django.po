@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-05 17:14-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\helloworld_project\settings.py:48
+msgid "English"
+msgstr "Ingles"
+
+#: .\helloworld_project\settings.py:49
+msgid "Spanish"
+msgstr "Español"
+
+#: .\pages\templates\base.html:39
+msgid "Search"
+msgstr "Buscar"
+
+#: .\pages\templates\base.html:42
+msgid "Home"
+msgstr "Inicio"
+
+#: .\pages\templates\base.html:43
+msgid "Products"
+msgstr "Productos"
+
+#: .\pages\templates\base.html:44
+msgid "Cart"
+msgstr "Carrito"
+
+#: .\pages\templates\base.html:50
+msgid "Sign Up"
+msgstr "Registrarse"
+
+#: .\pages\templates\base.html:51
+msgid "Sign In"
+msgstr "Ingresar"
+
+#: .\pages\templates\base.html:91
+msgid "Developed by -"
+msgstr "Desarrollado por -"
+
+#: .\pages\templates\cart\index.html:18
+msgid "Products in cart"
+msgstr "Productos en el carrito"
+
+#: .\pages\templates\cart\index.html:22
+msgid "Name"
+msgstr "Nombre"
+
+#: .\pages\templates\cart\index.html:23
+msgid "Price"
+msgstr "Precio"
+
+#: .\pages\templates\cart\index.html:24
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: .\pages\templates\cart\index.html:27
+msgid "Total Cart Price"
+msgstr "Precio Total del Carrito"
+
+#: .\pages\templates\cart\index.html:31
+msgid "Remove all products from cart"
+msgstr "Remover Todos los Productos del Carrito"
+
+#: .\pages\templates\home.html:9
+msgid "Featured Products"
+msgstr "Productos Destacados"
+
+#: .\pages\templates\home.html:18
+msgid "See product"
+msgstr "Ver Producto"
+
+#: .\pages\templates\products\index.html:11
+msgid "Filter"
+msgstr "Filtrar"
+
+#: .\pages\templates\products\show.html:21
+msgid "Add to Cart"
+msgstr "Agregar al Carrito"
+
+#: .\pages\templates\sign\signin.html:9
+msgid "Sing In"
+msgstr "Ingresar"
+
+#: .\pages\templates\sign\signup.html:9
+msgid "sign up"
+msgstr "Registrarse"

@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}'Home Page - Online Store'{% endblock %}
 {% block content %}
 <form action="/signin/" method="POST">
     {% csrf_token %}
     {{form.as_p}}
     <button>
-        sign in
+      {% trans "Sing In" %}
     </button>
 </form>
 <script>
