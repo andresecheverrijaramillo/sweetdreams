@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block header_title %} {{ subtitle }} {% endblock %}
+{% block content %}
+<head>
+    <title>JSON Elements</title>
+</head>
+<body>
+    <h1>JSON Elements</h1>
+    <ul>
+        {% for product in products %}
+            <li>
+                <p>Description: {{ product.description }}</p>
+                <p>ID: {{ product.product_id }}</p>
+                <p>Name: {{ product.name }}</p>
+                <p>Price: {{ product.price }}</p>
+                <img src="{{ product.product_image }}" alt="{{ product.name }}" width="100">
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+{% endblock %}

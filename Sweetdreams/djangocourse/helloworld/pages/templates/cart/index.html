@@ -31,6 +31,18 @@
         <button type="submit">{% trans "Remove all products from cart" %}</button>
       </form>
     </div>
+    {% if user.is_authenticated %}
+    <form method="get" action="{% url 'generate_pdf' %}" onsubmit="redirectToHome()">
+      <button type="submit">Buy</button>
+    </form>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
+
+<script>
+  function redirectToHome() {
+    // Realizar la redirección a la página 'home' utilizando JavaScript
+    window.location.href = "{% url 'home' %}";
+  }
+</script>

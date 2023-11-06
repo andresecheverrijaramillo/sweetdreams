@@ -6,13 +6,24 @@ from django.urls import reverse
 from django import forms
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ValidationError
-from .models import Product, Category, Organization
+from .models import Product, Category, Organization, ProductJson
 from random import sample
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 import json
 from django.conf import settings
+from .forms import JSONUploadForm
+import googlemaps
+import datetime 
+from django.http import FileResponse
+from django.template import Context
+from django.template.loader import get_template
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from django.contrib.auth.decorators import login_required
+import os
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = "home.html"
@@ -176,16 +187,15 @@ def signin(request):
         view_data = {"form": form}
         return render(request, "sign/signin.html", view_data)
     else:
-        user = authenticate(
-            request,
-            username=request.POST["username"],
-            password=request.POST["password"],
-        )
-        if user is None:
-            return HttpResponseRedirect(f"{reverse('signin')}?error=1")
-        else:
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
             login(request, user)
-            return HttpResponseRedirect(f"{reverse('signin')}?success=1")
+            return redirect("home")
+        else:
+            view_data = {"form": form}
+            return render(request, "sign/signin.html", view_data)
+
 
 class ProductSearch(ListView):
     model = Product
@@ -210,8 +220,76 @@ def export_products_to_json(request):
                     'price': product.price,
                     'created_at': str(product.created_at),
                     'updated_at': str(product.updated_at),
+                    'category': str(product.category),
+                    'organization': str(product.organization),
                     'image_url': "http://35.223.74.49:8000"+settings.MEDIA_URL + str(product.image)} for product in products]
     json_data = json.dumps(products_data, indent=2)
     response = HttpResponse(json_data, content_type='application/json')
     response['Content-Disposition'] = 'attachment; filename="products.json"'
     return response
+
+def display_json(request):
+    products = ProductJson.objects.all()
+    return render(request, 'json/display_json.html', {'products': products})
+    
+def upload_json(request):
+    if request.method == 'POST':
+        form = JSONUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            uploaded_file = request.FILES['json_file']
+            ProductJson.objects.all().delete()
+            try:
+                data = json.load(uploaded_file)
+                for item in data:
+                    ProductJson.objects.create(
+                        description=item['description'],
+                        productJson_id=item['id'],
+                        name=item['name'],
+                        price=item['price'],
+                        product_image=item['product_image']
+                    )
+                return redirect('display_json')
+            except json.JSONDecodeError:
+                # Manejar errores si el JSON no es válido
+                pass
+        else:
+            form.add_error(None, 'Please select a JSON file to upload.')
+    else:
+        form = JSONUploadForm()
+
+    return render(request, 'json/upload_json.html', {'form': form})
+
+class GeneratePDFView(View):
+    def get(self, request):
+        user = request.user
+        buffer = BytesIO()
+        p = canvas.Canvas(buffer, pagesize=letter)
+        p.drawString(100, letter[1] - 50, "Shopping Cart")       
+        # Obtener datos del carrito
+        cart_product_data = request.session.get("cart_product_data", {})
+        y = letter[1] - 100
+        for product_id, quantity in cart_product_data.items():
+            try:
+                product = Product.objects.get(pk=product_id)
+                product_name = product.name
+                product_price = product.price
+                p.drawString(100, y, f"Name: {product_name} - Price: ${product_price} - Quantity: {quantity}")
+                y -= 20
+            except Product.DoesNotExist:
+                pass
+        cart_total = sum(
+            [product.price * cart_product_data[product_id] for product_id in cart_product_data]
+        )
+        p.drawString(100, y, f"Total Cart Price: ${cart_total}")
+        p.drawString(300, y, f"User: {user.username}")
+        p.drawString(300, y - 20, f"Email: {user.email}")
+        p.showPage()
+        p.save()
+        buffer.seek(0)
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="cart.pdf"'
+        response.write(buffer.read())
+
+        if "cart_product_data" in request.session:
+            del request.session["cart_product_data"]
+        return response

@@ -2,26 +2,26 @@
 {% load i18n %}
 {% block title %}'Home Page - Online Store'{% endblock %}
 {% block content %}
-<form action="/signup/" method="POST">
+<form action="{% url 'signup' %}" method="POST">
     {% csrf_token %}
     {{form.as_p}}
     <button>
-      {% trans "sign up" %}
+      {% trans "Sign Up" %}
     </button>
 </form>
 
 <script>
-    // Verifica si la URL contiene un parámetro "success" para mostrar la alerta
+    // Verifica si la URL contiene parámetros para mostrar las alertas
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get("success")) {
       alert("Successful registration! Now you can log in.");
       window.location.href = "/";
     }
     if (urlParams.get("password")) {
-      alert("Password do not match");
+      alert("Passwords do not match");
     }
     if (urlParams.get("user")) {
-      alert("User name already exist");
+      alert("Username already exists");
     }
   </script>
 

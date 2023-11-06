@@ -42,7 +42,8 @@
           <a class="nav-link active" href="{% url 'home' %}">{% trans "Home" %}</a>
           <a class="nav-link active" href="{% url 'index' %}">{% trans "Products" %}</a>
           <a class="nav-link active" href="{% url 'cart' %}">{% trans "Cart" %}</a>
-          <a class="nav-link active" href="{% url 'export_products_json' %}">JSON</a>
+          <a class="nav-link active" href="{% url 'export_products_json' %}">Create JSON</a>
+          <a class="nav-link active" href="{% url 'upload_json' %}">Analise JSON</a>
           {% if user.is_authenticated %}
           <a class="nav-link active" href="{% url 'signout' %}">Log out</a>
           <span class="nav-link active" style="color: #5d12ac;"><strong>{{ user.username }}</strong></span>
@@ -68,6 +69,7 @@
             </ul>
           </li>
         </div>
+        <div id="real-time-clock">Real time Hour: <span id="current-time"></span></div>
       </div>
     </div>
   </nav>
@@ -123,3 +125,27 @@
 </body>
 
 </html>
+
+
+<script>
+  // Función para obtener y actualizar la hora en tiempo real
+  function updateRealTimeClock() {
+    // Hacer una solicitud a la API de Google para obtener la hora en tiempo real
+    fetch(`https://maps.googleapis.com/maps/api/timezone/json?location=40.748817,-73.985428&timestamp=${Math.floor(Date.now() / 1000)}&key=AIzaSyCJF6JE-qsGIf82X6KDY2kuC8bgtreql3E`)
+      .then(response => response.json())
+      .then(data => {
+        const timeZoneId = data.timeZoneId;
+        const timeZone = Intl.DateTimeFormat(undefined, {timeZone: timeZoneId, timeStyle: 'medium'}).format(new Date());
+        document.getElementById('current-time').textContent = timeZone;
+      })
+      .catch(error => {
+        console.error('Error al obtener la hora en tiempo real:', error);
+      });
+  }
+
+  // Actualizar la hora en tiempo real cada segundo
+  setInterval(updateRealTimeClock, 1000);
+
+  // Llamar a la función para obtener la hora en tiempo real inicialmente
+  updateRealTimeClock();
+</script>

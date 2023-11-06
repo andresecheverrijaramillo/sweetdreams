@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block title %}'Home Page - Online Store'{% endblock %}
 {% block content %}
-<form action="/signin/" method="POST">
+<form action="{% url 'signin' %}" method="POST">
     {% csrf_token %}
     {{form.as_p}}
     <button>
@@ -22,5 +22,5 @@
       // Redirige a otra página después de mostrar la alerta
       window.location.href = "/signin"; // Cambia "/login" por la URL a la que deseas redirigir
     }
-  </script>
+</script>
 {% endblock %}

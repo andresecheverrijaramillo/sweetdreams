@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block header_title %} {{ subtitle }} {% endblock %}
+{% block content %}
+<head>
+    <title>Upload JSON File</title>
+</head>
+<body>
+    <h1>Upload JSON File</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <button type="submit">Upload JSON</button>
+    </form>
+</body>
+{% endblock %}

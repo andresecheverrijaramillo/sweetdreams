@@ -11,6 +11,9 @@ from .views import (
     signin,
     ProductSearch,
     export_products_to_json,
+    upload_json,
+    display_json,
+    GeneratePDFView,
 )
 
 urlpatterns = [
@@ -25,4 +28,7 @@ urlpatterns = [
     path("signin/", signin, name="signin"),
     path('search_products/', ProductSearch.as_view(), name='search_products'),
     path('export-products-json/', export_products_to_json, name='export_products_json'),
+    path('upload_json/', upload_json, name='upload_json'),
+    path('display_json/', display_json, name='display_json'),
+    path('generate_pdf/', GeneratePDFView.as_view(), name='generate_pdf'),
 ]
