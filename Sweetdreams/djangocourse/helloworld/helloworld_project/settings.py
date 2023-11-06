@@ -18,9 +18,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 #'35.193.12.40'
 
-#Allow i18n
-USE_I18N = True
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -81,6 +78,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+#locale path
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
 
 
 # Password validation

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-05 17:14-0500\n"
+"POT-Creation-Date: 2023-11-05 21:36-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\helloworld_project\settings.py:48
+
+#: .\helloworld_project\settings.py:45
 msgid "English"
 msgstr "Ingles"
 
-#: .\helloworld_project\settings.py:49
+#: .\helloworld_project\settings.py:46
 msgid "Spanish"
 msgstr "Español"
+
+#: .\pages\templates\base.html:38
+#, fuzzy
+#| msgid "Search"
+msgid "Search Blog"
+msgstr "Buscar en el Blog"
 
 #: .\pages\templates\base.html:39
 msgid "Search"
@@ -41,15 +48,31 @@ msgstr "Productos"
 msgid "Cart"
 msgstr "Carrito"
 
-#: .\pages\templates\base.html:50
+#: .\pages\templates\base.html:45
+msgid "Create"
+msgstr "Crear"
+
+#: .\pages\templates\base.html:46
+msgid "Analize"
+msgstr "Analizar"
+
+#: .\pages\templates\base.html:51 .\pages\templates\sign\signup.html:9
 msgid "Sign Up"
 msgstr "Registrarse"
 
-#: .\pages\templates\base.html:51
+#: .\pages\templates\base.html:52
 msgid "Sign In"
 msgstr "Ingresar"
 
-#: .\pages\templates\base.html:91
+#: .\pages\templates\base.html:56
+msgid "Language"
+msgstr "Lenguaje"
+
+#: .\pages\templates\base.html:72
+msgid "Real time Hour"
+msgstr "Hora en Tiempo Real"
+
+#: .\pages\templates\base.html:110
 msgid "Developed by -"
 msgstr "Desarrollado por -"
 
@@ -77,6 +100,14 @@ msgstr "Precio Total del Carrito"
 msgid "Remove all products from cart"
 msgstr "Remover Todos los Productos del Carrito"
 
+#: .\pages\templates\cart\index.html:36
+msgid "Buy"
+msgstr "Comprar"
+
+#: .\pages\templates\home.html:6
+msgid "Welcome to"
+msgstr "Bienvenido a"
+
 #: .\pages\templates\home.html:9
 msgid "Featured Products"
 msgstr "Productos Destacados"
@@ -97,6 +128,21 @@ msgstr "Agregar al Carrito"
 msgid "Sing In"
 msgstr "Ingresar"
 
-#: .\pages\templates\sign\signup.html:9
-msgid "sign up"
-msgstr "Registrarse"
+#: .\pages\views.py:47
+msgid "All the Categories"
+msgstr "Todas las Categorías"
+
+#: .\pages\views.py:49
+msgid "Category"
+msgstr "Categoría"
+
+#: .\pages\views.py:53
+msgid "All the Companies"
+msgstr "Todas las Compañías"
+
+#: .\pages\views.py:55
+msgid "Company"
+msgstr "Compañía"
+
+#~ msgid "sign up"
+#~ msgstr "Registrarse"

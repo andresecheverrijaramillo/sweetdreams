@@ -35,15 +35,15 @@
         <div class="container text-white">
           <form  action="{% url 'search_products' %}" method="get">
             {% csrf_token %}
-            <input type="text" name="q" placeholder="Search Blog">
+            <input type="text" name="q" placeholder="{% trans "Search Blog" %}">
             <button type="submit" >{% trans "Search" %}</button>
           </form>
         <div class="navbar-nav ms-auto">
           <a class="nav-link active" href="{% url 'home' %}">{% trans "Home" %}</a>
           <a class="nav-link active" href="{% url 'index' %}">{% trans "Products" %}</a>
           <a class="nav-link active" href="{% url 'cart' %}">{% trans "Cart" %}</a>
-          <a class="nav-link active" href="{% url 'export_products_json' %}">Create JSON</a>
-          <a class="nav-link active" href="{% url 'upload_json' %}">Analise JSON</a>
+          <a class="nav-link active" href="{% url 'export_products_json' %}">{% trans "Create" %} JSON</a>
+          <a class="nav-link active" href="{% url 'upload_json' %}">{% trans "Analize" %} JSON</a>
           {% if user.is_authenticated %}
           <a class="nav-link active" href="{% url 'signout' %}">Log out</a>
           <span class="nav-link active" style="color: #5d12ac;"><strong>{{ user.username }}</strong></span>
@@ -53,7 +53,7 @@
           {% endif %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Language
+              {% trans "Language" %}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               {% get_current_language as LANGUAGE_CODE %}
@@ -69,7 +69,7 @@
             </ul>
           </li>
         </div>
-        <div id="real-time-clock">Real time Hour: <span id="current-time"></span></div>
+        <div id="real-time-clock">{% trans "Real time Hour" %}: <span id="current-time"></span></div>
       </div>
     </div>
   </nav>

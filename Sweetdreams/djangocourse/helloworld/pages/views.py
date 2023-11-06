@@ -23,6 +23,7 @@ from reportlab.pdfgen import canvas
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import gettext_lazy as _
 import os
 # Create your views here.
 class HomePageView(TemplateView):
@@ -43,13 +44,15 @@ class ProductFilterForm(forms.Form):
     # Agrega los campos que desees para filtrar, por ejemplo, una categoría
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
-        empty_label="Todas las Categorías",
+        empty_label=_("All the Categories"),
         required=False,
+        label=_("Category"),
     )
     organization = forms.ModelChoiceField(
         queryset=Organization.objects.all(),
-        empty_label="Todas las Compañías",
+        empty_label=_("All the Companies"),
         required=False,
+        label=_("Company"),
     )
 
 

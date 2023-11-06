@@ -33,7 +33,7 @@
     </div>
     {% if user.is_authenticated %}
     <form method="get" action="{% url 'generate_pdf' %}" onsubmit="redirectToHome()">
-      <button type="submit">Buy</button>
+      <button type="submit">{% trans "Buy" %}</button>
     </form>
     {% endif %}
   </div>
