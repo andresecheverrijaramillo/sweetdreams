@@ -1,2 +1,4 @@
 Django
 factory_boy
+reportlab
+googlemaps
